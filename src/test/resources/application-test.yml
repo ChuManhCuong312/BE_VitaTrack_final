@@ -1,0 +1,56 @@
+# ── Test Profile – dùng H2 in-memory thay SQL Server ─────────────────────────
+spring:
+  datasource:
+    url: jdbc:h2:mem:vitatrack_test;DB_CLOSE_DELAY=-1;MODE=MSSQLServer;NON_KEYWORDS=VALUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  sql:
+    init:
+      mode: never
+
+  # Disable mail trong test
+  mail:
+    host: localhost
+    port: 25
+    username: test@test.com
+    password: test
+
+jwt:
+  secret: VitaTrackJWTSecretKeyMustBeAtLeast256BitsLongForHS256Algorithm2024
+  expiration-ms: 86400000
+  refresh-expiration-ms: 604800000
+
+cloudinary:
+  cloud-name: test
+  api-key: "123"
+  api-secret: test
+
+openai:
+  api-key: sk-test-key
+  base-url: https://api.openai.com/v1
+  model: gpt-4o-mini
+
+app:
+  frontend-url: http://localhost:3000
+  password-reset-token-expiry-minutes: 30
+  bmi-underweight-threshold: 18.5
+  bmi-obese-threshold: 30.0
+  calorie-overage-alert-percent: 1.20
+
+cors:
+  allowed-origins: "http://localhost:3000"
+
+logging:
+  level:
+    com.vitatrack: WARN
+    org.springframework.security: WARN

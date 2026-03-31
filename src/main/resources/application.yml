@@ -1,0 +1,77 @@
+server:
+  port: ${PORT:8080}
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: VitaTrack
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:sqlserver://localhost:1433;databaseName=DB_VitaTrack;encrypt=false;trustServerCertificate=true}
+    username: ${SPRING_DATASOURCE_USERNAME:user2}
+    password: ${SPRING_DATASOURCE_PASSWORD:123456789}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    database-platform: org.hibernate.dialect.SQLServerDialect
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: never
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SPRING_MAIL_USERNAME:your_email@gmail.com}
+    password: ${SPRING_MAIL_PASSWORD:your_app_password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+jwt:
+  secret: ${JWT_SECRET:VitaTrackJWTSecretKeyMustBeAtLeast256BitsLongForHS256Algorithm2024}
+  expiration-ms: 86400000
+  refresh-expiration-ms: 604800000
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME:your_cloud_name}
+  api-key: ${CLOUDINARY_API_KEY:your_api_key}
+  api-secret: ${CLOUDINARY_API_SECRET:your_api_secret}
+
+openai:
+  api-key: ${OPENAI_API_KEY:your_api_key}
+  base-url: ${OPENAI_BASE_URL:https://api.groq.com/openai/v1}
+  model: ${OPENAI_MODEL:llama-3.3-70b-versatile}
+  vision-model: ${OPENAI_VISION_MODEL:llama-3.3-70b-versatile}
+  max-tokens: 1000
+
+google:
+  fit:
+    client-id: ${GOOGLE_FIT_CLIENT_ID:your_client_id}
+    client-secret: ${GOOGLE_FIT_CLIENT_SECRET:your_client_secret}
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:5173,http://127.0.0.1:3000,http://127.0.0.1:5173}
+
+app:
+  frontend-url: ${APP_FRONTEND_URL:http://localhost:5173}
+  password-reset-token-expiry-minutes: 30
+  bmi-underweight-threshold: 18.5
+  bmi-obese-threshold: 30.0
+  calorie-overage-alert-percent: 1.20
+
+logging:
+  level:
+    com.vitatrack: INFO
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN

@@ -1,0 +1,69 @@
+# ── Maven build output ───────────────────────────────────────────
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+*.class
+*.jar
+.idea/
+*.iml
+.env
+application-local.yml
+application-local.properties
+
+
+# ── Maven wrapper (giữ lại để CI/CD dùng) ────────────────────────
+# .mvn/wrapper/maven-wrapper.properties  <- GIỮ LẠI
+
+# ── IntelliJ IDEA ─────────────────────────────────────────────────
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# ── Eclipse ───────────────────────────────────────────────────────
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# ── VS Code ───────────────────────────────────────────────────────
+.vscode/
+
+# ── Cấu hình nhạy cảm (QUAN TRỌNG - KHÔNG push lên Git) ──────────
+# Tạo file application-local.yml riêng và để trong .gitignore
+src/main/resources/application-local.yml
+src/main/resources/application-prod.yml
+src/main/resources/application-secret.yml
+
+# ── Logs ──────────────────────────────────────────────────────────
+*.log
+logs/
+log/
+
+# ── OS generated ──────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── File upload tạm (nếu lưu local) ──────────────────────────────
+uploads/
+temp/
+tmp/
+
+# ── Test & Coverage ───────────────────────────────────────────────
+*.exec
+jacoco.exec
+
+
