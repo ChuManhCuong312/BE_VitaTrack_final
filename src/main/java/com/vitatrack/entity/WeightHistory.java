@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * WeightHistory – bổ sung theo SRS FR-10:
@@ -49,6 +50,7 @@ public class WeightHistory {
     @Column(length = 100)
     private String notes;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(name = "recorded_at", updatable = false)
     private LocalDateTime recordedAt;
 
