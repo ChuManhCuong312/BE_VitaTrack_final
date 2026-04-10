@@ -123,6 +123,50 @@ public class UserController {
     }
 
     /**
+     * POST /users/me/apply-expert – FR-36 nộp hồ sơ đăng ký chuyên gia
+     */
+    @PostMapping("/me/apply-expert")
+    public ResponseEntity<Map<String, Object>> applyForExpert(
+            @AuthenticationPrincipal User user,
+            @RequestBody Map<String, String> body) {
+        if ("verified".equals(user.getExpertStatus()))
+            return ResponseEntity.badRequest().body(Map.of("message", "Tài khoản của bạn đã là chuyên gia."));
+        if ("pending".equals(user.getExpertStatus()))
+            return ResponseEntity.badRequest().body(Map.of("message", "Hồ sơ của bạn đang chờ Admin xét duyệt."));
+
+        String note = String.format(
+                "Bằng cấp: %s | Chuyên môn: %s | Kinh nghiệm: %s năm | Liên lạc: %s | Bio: %s",
+                body.getOrDefault("qualifications", ""),
+                body.getOrDefault("specialization", ""),
+                body.getOrDefault("experience", ""),
+                body.getOrDefault("contact", ""),
+                body.getOrDefault("bio", "")
+        );
+
+        User u = userRepository.findById(user.getId()).orElseThrow();
+        u.setExpertStatus("pending");
+        u.setExpertRejectReason(note);
+        userRepository.save(u);
+
+        Map<String, Object> res = new LinkedHashMap<>();
+        res.put("message", "Đã gửi hồ sơ. Admin sẽ xem xét và phản hồi trong 1-3 ngày làm việc.");
+        res.put("status", "pending");
+        return ResponseEntity.ok(res);
+    }
+
+    /**
+     * GET /users/me/apply-expert – kiểm tra trạng thái hồ sơ
+     */
+    @GetMapping("/me/apply-expert")
+    public ResponseEntity<Map<String, Object>> getApplyStatus(@AuthenticationPrincipal User user) {
+        User u = userRepository.findById(user.getId()).orElseThrow();
+        Map<String, Object> res = new LinkedHashMap<>();
+        res.put("expertStatus", u.getExpertStatus());
+        res.put("expertRejectReason", u.getExpertRejectReason());
+        return ResponseEntity.ok(res);
+    }
+
+    /**
      * POST /users/me/chat/{expertId}
      * Người dùng gửi tin nhắn đến chuyên gia.
      * Lưu với role="client" để phân biệt với tin nhắn của chuyên gia (role="expert").

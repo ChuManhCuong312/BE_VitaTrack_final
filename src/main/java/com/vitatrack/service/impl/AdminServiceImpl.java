@@ -350,7 +350,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Map<String, Object>> getPendingExperts() {
-        return userRepository.findByRoleAndExpertStatus(Role.EXPERT, "pending")
+        return userRepository.findByExpertStatus("pending")
                 .stream().map(this::userToMap).collect(Collectors.toList());
     }
 

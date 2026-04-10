@@ -38,6 +38,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                                    Pageable pageable);
 
     // FR-36 Expert approval
+    List<User> findByExpertStatus(String expertStatus);
     List<User> findByRoleAndExpertStatus(Role role, String expertStatus);
 
     // ── Statistics ────────────────────────────────────────────────────────
